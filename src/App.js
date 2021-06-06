@@ -53,7 +53,7 @@ class App extends Component {
       <div className="App">
         <header className="App-Header">
           <h1 className="App-title">GitHub Repository Issue Manager</h1>
-          <h1>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</h1>
+          <h1>token was here...</h1>
           <Login inputHandler={this.handleApiTokenInputChanged}/>
           <TextInput inputHandler={this.handleOrgInputChanged} title="Organization" />
           <button onClick={this.handleGetRepos}>Get Repos</button>
