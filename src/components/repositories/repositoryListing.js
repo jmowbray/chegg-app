@@ -1,4 +1,4 @@
-import ConnectedRepository from './connectedRepository';
+import ConnectedRepository from '../repositories/connectedRepository';
 
 export const RepositoryListing = props => {
     const { repos, selectedRepo } = props;

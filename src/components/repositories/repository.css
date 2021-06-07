@@ -1,0 +1,35 @@
+.repository {
+    border: solid black 1px;
+    border-radius: 5px;
+    cursor: pointer;
+    /* width: 150px; */
+    padding: 5px;
+    margin-bottom: 8px;
+}
+
+.repository--selected {
+    border: solid black 1px;
+    border-radius: 5px;
+    cursor: pointer;
+    /* width: 150px; */
+    padding: 5px;
+    margin-bottom: 8px;
+    background-color: lightgrey;
+}
+
+.repository--selected svg {
+    color: white;
+}
+
+.repository__issues-count {
+    margin-top: 5px;
+}
+
+.repository__issues svg {
+    vertical-align: text-bottom;
+}
+
+.repository__issues-count {
+    display: inline-block;
+    margin-left: 5px;
+}

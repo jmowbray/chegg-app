@@ -1,0 +1,17 @@
+.repo-issue-browser {
+    margin-top: 25px;
+    display: flex;
+    height: 100%;
+}
+
+.repo-issue-browser__repos {
+    width: 24%;
+    display: inline-block;
+    overflow-y: scroll;
+}
+
+.repo-issue-browser__issues {
+    width: 73%;
+    display: inline-block;
+    overflow-y: scroll;
+}

@@ -1,0 +1,37 @@
+.app-wrapper {
+    position: absolute;
+    left: 60px;
+    right: 60px;
+    top: 75px;
+    height: calc(99% - 120px);
+    overflow-y: hidden;
+}
+
+.app-main {
+    height: 100%;
+    width: 75%;
+    margin: auto;
+}
+
+.repo-issue-browser-wrapper {
+    height: 82%;
+}
+
+.header {
+    background: #161b22;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 60px;
+    color: white
+}
+
+.footer {
+    background: #161b22;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 60px;
+}

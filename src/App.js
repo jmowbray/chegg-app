@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import './App.css';
-import { RepoIssueBrowser } from './views/repoIssueBrowser';
-import HeaderControls from './components/headerControls';
+import './main.css'
+import { RepoIssueBrowser } from './views/repository-issue-browser/repoIssueBrowser';
+import HeaderControls from './components/controls/headerControls';
 
 const mapStateToProps = state => ({
     ...state
@@ -30,18 +31,25 @@ class App extends Component {
             );
         }
 
-        return <div>Enter an API Token and Organization and click "Load Repositories" to view repositories</div>;
+        return null;
     }
 
     render() {
         return (
             <div className="App">
-                <h1 className="App-title">GitHub Repository Issue Manager</h1>
-                <div>Enter an Organization (required) and an API Token (optional) then click "Load Repositories" to load repositories.</div>
-                <div style={{ width: "50%", margin: "auto", marginTop: "25px" }}>
-                    <HeaderControls />
-                    {this.renderRepoIssueBrowser()}
+                <div className="header">
+                    <h1>GitHub Repository Issue Manager</h1>
                 </div>
+
+                <div className="app-wrapper">
+                    <div className="app-main">
+                        <HeaderControls />
+                        <div className="repo-issue-browser-wrapper">
+                            {this.renderRepoIssueBrowser()}
+                        </div>
+                    </div>
+                </div>
+                <div className="footer"></div>
             </div>
         );
     }

@@ -1,8 +1,8 @@
 import { Issue } from './issue';
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { SortableList } from './sortable';
-import  { issuesReordered } from '../state/action-creators/appActions';
+import { SortableList } from '../sortable';
+import  { issuesReordered } from '../../state/action-creators/appActions';
 
 const mapStateToProps = (state) => {
     return {

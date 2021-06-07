@@ -1,0 +1,42 @@
+.issue {
+    height: 60px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    margin-bottom: 8px;
+    display: flex;
+}
+
+.issue__avatar {
+    height: 40px;
+    width: 40px;
+}
+
+.issue__avatar img {
+    height: 40px;
+    width: 40px;
+}
+
+.issue__details {
+    margin-left: 10px;
+    text-align: left;
+    width: 90%;
+}
+
+.issue__details-title {
+    font-weight: bold;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.issue__details-times {
+    margin-top: 3px;
+    font-size: small;
+}
+
+.issue__details-times-updated {
+    font-style: italic;
+}

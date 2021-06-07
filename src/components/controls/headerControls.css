@@ -1,0 +1,23 @@
+.header-controls {
+    display: grid;
+    margin-top: 25px;
+    width: 60%;
+    margin: auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+}
+
+.directions {
+    margin-bottom: 25px;
+}
+
+.header-controls__button {
+    width: 100%;
+    position: relative;
+}
+
+.header-controls__button button {
+    position: absolute;
+    bottom: 0px;
+    left: 30px;
+}
