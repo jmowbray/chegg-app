@@ -2,7 +2,7 @@
 import { arrayMove } from 'react-sortable-hoc';
 import { actionTypes } from '../action-creators/appActions';
 
-const initialState = {
+export const initialState = {
     isLoaded: false,
     isLoading: false,
     apiToken: null,
