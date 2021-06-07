@@ -1,71 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { apiTokenInputChanged, issuesLoadRequested, orgInputChanged, repoLoadRequested } from './state/action-creators/appActions';
 
 import './App.css';
-import { Login } from './components/login';
-import { TextInput } from './components/textInput';
-import { RepositoryListing } from './components/repository';
+import { RepoIssueBrowser } from './views/repoIssueBrowser';
+import HeaderControls from './components/headerControls';
 
 const mapStateToProps = state => ({
-  ...state
+    ...state
 });
 
 const mapDispatchToProps = dispatch => ({
-  apiTokenInputChanged: apiToken => dispatch(apiTokenInputChanged(apiToken)),
-  orgInputChanged: org => dispatch(orgInputChanged(org)),
-  fetchRepos: () => dispatch(repoLoadRequested()),
-  issuesLoadRequested: repoId => dispatch(issuesLoadRequested(repoId))
+
 });
 
 class App extends Component {
 
-  handleApiTokenInputChanged = (event) => {
-    this.props.apiTokenInputChanged(event.target.value);
-  }
+    renderRepoIssueBrowser() {
+        const { repos, selectedRepo, issues, isLoading, errorMsg, issuesLoading } = this.props.app;
 
-  handleGetRepos = event => {
-    this.props.fetchRepos();
-  }
+        if (errorMsg) {
+            return <div style={{ marginTop: "25px" }}>{errorMsg}</div>
+        } else if (isLoading) {
+            return <div style={{ marginTop: "25px" }}>Loading...</div>
+        }
 
-  handleOrgInputChanged = event => {
-    this.props.orgInputChanged(event.target.value);
-  }
+        if (repos) {
+            return (
+                <RepoIssueBrowser repos={repos} issues={issues} selectedRepo={selectedRepo} issuesLoading={issuesLoading} />
+            );
+        }
 
-  handleRepoClicked = id => {
-    this.props.issuesLoadRequested();
-  }
-
-  renderStuffs() {
-    if (this.props.app.selectedRepo) {
-      return <div>{this.props.app.selectedRepo}</div>  
+        return <div>Enter an API Token and Organization and click "Load Repositories" to view repositories</div>;
     }
 
-    if (this.props.app.repos) {
-      return <RepositoryListing repos={this.props.app.repos} onRepoClickHandler={this.handleRepoClicked} />;
+    render() {
+        return (
+            <div className="App">
+                <h1 className="App-title">GitHub Repository Issue Manager</h1>
+                <div>Enter an Organization (required) and an API Token (optional) then click "Load Repositories" to load repositories.</div>
+                <div style={{ width: "50%", margin: "auto", marginTop: "25px" }}>
+                    <HeaderControls />
+                    {this.renderRepoIssueBrowser()}
+                </div>
+            </div>
+        );
     }
-
-    return null;
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-Header">
-          <h1 className="App-title">GitHub Repository Issue Manager</h1>
-          <h1>token was here...</h1>
-          <Login inputHandler={this.handleApiTokenInputChanged}/>
-          <TextInput inputHandler={this.handleOrgInputChanged} title="Organization" />
-          <button onClick={this.handleGetRepos}>Get Repos</button>
-          {this.renderStuffs()}
-        </header>
-        <div style={{border: "solid black 1px", height: "500px", width: "500px", marginTop: "25px", marginLeft: "auto", marginRight: "auto"}}>
-          <div style={{borderBottom: "solid black 1px"}}>State Tree</div>
-          <pre>{JSON.stringify(this.props, null, 4)}</pre>
-        </div>
-      </div>
-    );
-  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

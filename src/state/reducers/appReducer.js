@@ -1,4 +1,6 @@
 // TODO: Break into multiple reducers
+import { arrayMove } from 'react-sortable-hoc';
+import { actionTypes } from '../action-creators/appActions';
 
 const initialState = {
     isLoaded: false,
@@ -8,69 +10,72 @@ const initialState = {
     repos: [],
     selectedRepo: null,
     issues: [],
-    errorMsg: null
+    errorMsg: null,
+    issuesLoading: false
 };
 
 const app = (state = initialState, action) => {
     switch (action.type) {
-        case 'APP_LOADED':
-            return {
-                result: action.payload
-            }
-        case 'API_KEY_SUBMITTED':
+        case actionTypes.API_KEY_CHANGED:
             return {
                 ...state,
                 apiToken: action.payload.apiToken
             }
-        case 'API_KEY_CLEARED':
-            return {
-                result: action.payload
-            }
-        case 'ORG_INPUT_CHANGED':
+        case actionTypes.ORG_INPUT_CHANGED:
             return {
                 ...state,
                 org: action.payload.org
             }
-        case 'REPO_LOAD_REQUESTED':
+        case actionTypes.REPO_LOAD_REQUESTED:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                issues: [],
+                selectedRepo: null,
+                errorMsg: null
             }
-        case 'REPO_LOAD_SUCCEEDED':
+        case actionTypes.REPO_LOAD_SUCCEEDED:
             const { repos } = action.payload;
             const repoNames = repos.map(mapRepo);
             return {
                 ...state,
                 isLoading: false,
-                repos: repoNames
+                repos: repoNames,
+                errorMsg: null
             }
-        case 'REPO_LOAD_FAILED':
+        case actionTypes.REPO_LOAD_FAILED:
             return {
                 ...state,
                 isLoading: false,
                 repos: [],
-                errorMsg: "Failed to load repo"
+                errorMsg: `Failed to load repositories for organization '${state.org}'`
             }
-        case 'ISSUES_LOAD_REQUESTED':
+        case actionTypes.ISSUES_LOAD_REQUESTED:
             return {
                 ...state,
-                selectedRepo: action.payload.repoName
+                selectedRepo: action.payload.repoName,
+                issuesLoading: true
             }
-        case 'ISSUES_LOAD_SUCCEEDED':
+        case actionTypes.ISSUES_LOAD_SUCCEEDED:
             const { issues } = action.payload;
             const mappedIssues = issues.map(mapIssue);
             return {
                 ...state,
-                issues: mappedIssues
+                issues: mappedIssues,
+                issuesLoading: false
             }
-        case 'ISSUES_LOAD_FAILED':
+        case actionTypes.ISSUES_LOAD_FAILED:
             return {
                 ...state,
-                errorMsg: "Failed to load issues"
+                errorMsg: 'Failed to load issues',
+                issuesLoading: false
             }
-        case 'ISSUE_REORDERED':
+        case actionTypes.ISSUES_REORDERED:
+            const { oldIndex, newIndex } = action.payload;
+
             return {
-                result: action.payload
+                ...state,
+                issues: arrayMove(state.issues, oldIndex, newIndex)
             }
         default:
             return state
@@ -87,19 +92,13 @@ const mapRepo = repo => {
     };
 }
 
-// assignee avatar
-// title
-// created time (dd/mm/yyyy)
-// last updated (2 hours ago)
 const mapIssue = issue => {
-    if (issue.assignee) {
-        console.log('assignee', issue.assignee);
-    }
     return {
-        assigneeAvatarUrl: issue.assignee?.['avatar_url'],
+        avatar_url: issue.avatar_url || issue.assignee?.['avatar_url'],
         title: issue.title,
-        createdAt: issue['created_at'],
-        updatedAt: issue['updated_at']
+        created_at: issue['created_at'],
+        updated_at: issue['updated_at'],
+        id: issue.id
     };
 }
 
